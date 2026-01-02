@@ -7,10 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/12EZCo_jBAueTeaBtSXqMXtV7oPVbnXGD
 """
 
-# IMPORTANT: RUN THIS CELL IN ORDER TO IMPORT YOUR KAGGLE DATA SOURCES,
-# THEN FEEL FREE TO DELETE THIS CELL.
-# NOTE: THIS NOTEBOOK ENVIRONMENT DIFFERS FROM KAGGLE'S PYTHON
-# ENVIRONMENT SO THERE MAY BE MISSING LIBRARIES USED BY YOUR
+
 # NOTEBOOK.
 import kagglehub
 taruntiwarihp_phishing_site_urls_path = kagglehub.dataset_download('taruntiwarihp/phishing-site-urls')
