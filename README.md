@@ -29,12 +29,12 @@ After training the models, the following accuracy scores were observed:
 
 | Model | Accuracy |
 | :--- | :--- |
-| Logistic Regression | [e.g., 85%] |
-| Naive Bayes | [e.g., 88%] |
-| Random Forest | [e.g., 94%] |
-| **XGBoost** | **[e.g., 96%]** |
+| Logistic Regression | [94.5%] |
+| Naive Bayes | [93.9%] |
+| Random Forest | [85.9%] |
+| XGBoost | [93.3%] |
 
-*The best performing model was **[Insert Best Model Name]** with an accuracy of **[Insert %]**.*
+*The best performing model was **[Logistic Regression]** with an accuracy of **[94.5 %]**.*
 
 ## 📂 Dataset
 * The dataset contains URLs labeled as either legitimate or phishing.
