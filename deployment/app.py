@@ -6,8 +6,13 @@ import numpy as np
 from scipy.sparse import hstack
 
 # Load model & vectorizer
-model = joblib.load("logistic_regression_phishing_model.pkl")
-vectorizer = joblib.load("tfidf_vectorizer_lr.pkl")
+import os
+
+BASE_DIR = os.path.dirname(__file__)
+
+model = joblib.load(os.path.join(BASE_DIR, "logistic_regression_phishing_model.pkl"))
+vectorizer = joblib.load(os.path.join(BASE_DIR, "tfidf_vectorizer_lr.pkl"))
+
 
 st.set_page_config(page_title="Phishing URL Detector", layout="centered")
 st.title("🔐 Phishing URL Detection")
