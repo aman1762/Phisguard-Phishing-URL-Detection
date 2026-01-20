@@ -57,14 +57,89 @@ def extract_features(url):
     return hstack([text_features, manual_features])
 
 # ---------- STREAMLIT UI ----------
-url = st.text_input("Enter URL")
+st.set_page_config(
+    page_title="PhisGuard | Phishing URL Detector",
+    page_icon="🛡️",
+    layout="centered"
+)
 
-if st.button("Check URL"):
-    features = extract_features(url)
-    pred = model.predict(features)[0]
-    prob = model.predict_proba(features)[0][pred]
+st.markdown(
+    "<h1 style='text-align: center;'>🛡️ PhisGuard</h1>",
+    unsafe_allow_html=True
+)
+st.markdown(
+    "<p style='text-align: center;'>AI-powered Phishing URL Detection System</p>",
+    unsafe_allow_html=True
+)
 
-    if pred == 0:
-        st.error(f"⚠️ Phishing URL ({prob*100:.2f}%)")
+# ---------- SIDEBAR ----------
+st.sidebar.title("ℹ️ About This Project")
+st.sidebar.markdown("""
+**PhisGuard** detects phishing URLs using:
+- TF-IDF text analysis
+- Structural URL features
+- Logistic Regression classifier
+
+**Tech Stack**
+- Python
+- Scikit-learn
+- Streamlit
+
+📌 Deployed on Streamlit Community Cloud
+""")
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("👨‍💻 **Created by Aman**")
+
+# ---------- EXAMPLE URL BUTTONS ----------
+st.markdown("### 🔗 Try Example URLs")
+
+example_urls = {
+    "✅ Legit (Google)": "https://www.google.com",
+    "⚠️ Phishing (Fake Login)": "http://login-verification-update.com",
+    "⚠️ Phishing (Bank Alert)": "http://bank-security-alert.co",
+    "✅ Legit (GitHub)": "https://github.com"
+}
+
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("Google"):
+        st.session_state.url = example_urls["✅ Legit (Google)"]
+    if st.button("Fake Login"):
+        st.session_state.url = example_urls["⚠️ Phishing (Fake Login)"]
+
+with col2:
+    if st.button("GitHub"):
+        st.session_state.url = example_urls["✅ Legit (GitHub)"]
+    if st.button("Bank Alert"):
+        st.session_state.url = example_urls["⚠️ Phishing (Bank Alert)"]
+
+# ---------- INPUT ----------
+url = st.text_input(
+    "Enter a URL to analyze",
+    value=st.session_state.get("url", ""),
+    placeholder="https://example.com"
+)
+
+# ---------- PREDICTION ----------
+if st.button("🚀 Analyze URL"):
+    if not url:
+        st.warning("Please enter a URL")
     else:
-        st.success(f"✅ Legitimate URL ({prob*100:.2f}%)")
+        features = extract_features(url)
+        pred = model.predict(features)[0]
+        prob = model.predict_proba(features)[0]
+
+        confidence = prob[pred] * 100
+
+        st.markdown("---")
+        st.markdown("### 🧪 Analysis Result")
+
+        if pred == 0:
+            st.error(f"⚠️ **Phishing URL Detected**")
+        else:
+            st.success(f"✅ **Legitimate URL**")
+
+        st.metric("Confidence Score", f"{confidence:.2f}%")
+
+        st.progress(int(confidence))
